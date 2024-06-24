@@ -18,6 +18,7 @@ defmodule AshUnionIssueWeb.Router do
     pipe_through :browser
 
     get "/", PageController, :home
+    live "/issue", IssueLive
   end
 
   # Other scopes may use custom stacks.
