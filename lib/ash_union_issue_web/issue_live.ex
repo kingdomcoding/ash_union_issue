@@ -34,7 +34,7 @@ defmodule AshUnionIssueWeb.IssueLive do
     case AshPhoenix.Form.submit(socket.assigns.form, params: form_params) do
       {:ok, resource} ->
         IO.inspect(resource, label: "Resource")
-        {:noreply, socket}
+        {:noreply, push_redirect(socket, to: ~p"/")}
 
       {:error, form_with_error} ->
         IO.inspect(form_with_error, label: "Form with error")
