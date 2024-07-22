@@ -1,6 +1,7 @@
 defmodule AshUnionIssueWeb.IssueLive do
   use AshUnionIssueWeb, :live_view
 
+  @impl true
   def mount(_params, _session, socket) do
     {:ok, resource} = AshUnionIssueWeb.Domain.create_parent(%{children: [%{type: "one_of_the_children", prompt: "Prompt"}]})
 
@@ -8,12 +9,14 @@ defmodule AshUnionIssueWeb.IssueLive do
     {:ok, socket}
   end
 
+  @impl true
   def render(assigns) do
     ~H"""
     <.form :let={f} for={@form} phx-change="validate" phx-submit="submit">
       <.inputs_for :let={ff} field={f[:children]}>
         <%= case ff.data do %>
           <% %AshUnionIssueWeb.Resources.OneOfTheChildren{} -> %>
+            <.input field={ff[:prompt]} value={ff.data.prompt} />
             <.input field={ff[:response]} label={ff.data.prompt} />
         <% end %>
       </.inputs_for>
@@ -34,7 +37,7 @@ defmodule AshUnionIssueWeb.IssueLive do
     case AshPhoenix.Form.submit(socket.assigns.form, params: form_params) do
       {:ok, resource} ->
         IO.inspect(resource, label: "Resource")
-        {:noreply, push_redirect(socket, to: ~p"/")}
+        {:noreply, push_navigate(socket, to: ~p"/")}
 
       {:error, form_with_error} ->
         IO.inspect(form_with_error, label: "Form with error")

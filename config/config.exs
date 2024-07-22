@@ -7,6 +7,8 @@
 # General application configuration
 import Config
 
+config :ash_union_issue, ash_domains: [AshUnionIssueWeb.Domain]
+
 config :ash_union_issue,
   ecto_repos: [AshUnionIssue.Repo],
   generators: [timestamp_type: :utc_datetime]
